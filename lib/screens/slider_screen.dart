@@ -1,9 +1,19 @@
+import 'package:fl_components/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
-class SliderScreen extends StatelessWidget {
+class SliderScreen extends StatefulWidget {
    
   const SliderScreen({Key? key}) : super(key: key);
-  
+
+  @override
+  State<SliderScreen> createState() => _SliderScreenState();
+}
+
+class _SliderScreenState extends State<SliderScreen> {
+
+  double _sliderValue = 100;
+  bool _sliderEnabled = true;
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -12,14 +22,56 @@ class SliderScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-
-          Slider(
+      
+          Slider.adaptive(
             min: 50,
             max: 400,
-            value: 100,
-            onChanged: (value){
+            activeColor: Apptheme.primary,
+           value: _sliderValue,
+            onChanged: _sliderEnabled
+              ?(value){
+                _sliderValue = value; 
+              setState(() {});
             }
-            )
+            : null
+          ),
+            
+       //   Checkbox(
+         //   value: _sliderEnabled,
+           // onChanged: (value) {
+             // _sliderEnabled = value ?? true;
+              //setState(() {});
+            //},
+          //),
+            
+          //Switch(
+         // value: _sliderEnabled, 
+         // onChanged: (value) =>setState (() {_sliderEnabled = value ?? true;})
+          //),
+           CheckboxListTile( 
+            activeColor: Apptheme.primary,
+            title: const  Text('Habilirar Slider'),
+            value: _sliderEnabled,
+            onChanged: (value) =>setState (() {_sliderEnabled = value ?? true;})       
+          ),
+
+          SwitchListTile(
+             activeColor: Apptheme.primary,
+            title: const  Text('Habilirar Slider'),
+            value: _sliderEnabled,
+            onChanged: (value) =>setState (() {_sliderEnabled = value ?? true;})       
+          ),
+        
+          Expanded(
+            child: SingleChildScrollView(
+              child: Image(
+                image: const NetworkImage('https://www.shutterstock.com/image-vector/bugs-bunny-character-cartoon-illustration-600nw-2325715335.jpg'),
+                fit: BoxFit.contain,
+                width: _sliderValue,
+              ),
+            ),
+          ),
+            const SizedBox(height: 50),            
         ],
       )
     );
